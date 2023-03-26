@@ -11,6 +11,21 @@ const getUser = async(req, res)=> {
     res.json(users);
 }
 
+const checkUser = async (req, res) => {
+    const email = req.params.email;
+    const result = await UserModel.findOne({ email });
+    if (result?.email) {
+      return res.send({ status: true, data: result });
+    }
+    res.send({ status: false });
+}
+
+const createUser = async (req, res) => {
+    const user = req.body;
+    const result = await UserModel.create(user);
+    res.send(result);
+}
+
 const fakeUser = (req, res) => {
     // generating Fake Data.
 
@@ -46,4 +61,4 @@ const fakeUserDeleteAll = (req, res) => {
     res.send('Deleted All');
 }
 
-module.exports = { allUsers, getUser, fakeUser, fakeUserDeleteAll }
+module.exports = { allUsers, getUser, createUser, checkUser, fakeUser, fakeUserDeleteAll }
