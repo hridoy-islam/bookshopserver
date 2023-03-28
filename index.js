@@ -14,14 +14,18 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-//const uri = process.env.MONGO_URL;
+const uri = process.env.MONGO_URL;
 //const uri = `mongodb://localhost:27017/`
 
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/bookshop');
+  await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+  });
 }
 
 // const verifyToken = (req, res, next) =>{
